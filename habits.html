@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habits - Daily Helper</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="screen">
+        <div class="login-container">
+            <h1>Daily Helper</h1>
+            <p>Stay organized together</p>
+            <div class="profile-buttons">
+                <button class="profile-btn" data-user="Nate">Nate</button>
+                <button class="profile-btn" data-user="Ellie">Ellie</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app-screen" class="screen hidden">
+        <header>
+            <div class="container header-content">
+                <h1 class="logo">Daily Helper</h1>
+                <nav>
+                    <ul class="menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="habits.html" class="active">Habits</a></li>
+                        <li><a href="reading.html">Reading</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <span id="current-user"></span>
+                    <button id="logout-btn" class="btn btn-small btn-secondary">Switch User</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="container">
+            <div class="habits-page">
+                <h2>Habit Tracker</h2>
+
+                <section class="add-habit card">
+                    <h3>Add New Habit</h3>
+                    <form id="add-habit-form" class="add-form">
+                        <input type="text" id="habit-name" placeholder="Enter habit name..." required>
+                        <button type="submit" class="btn">Add Habit</button>
+                    </form>
+                </section>
+
+                <section class="habits-list">
+                    <h3>Your Habits</h3>
+                    <div id="habits-container" class="habit-list">
+                        <p class="loading">Loading habits...</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p>Daily Helper - Stay organized together</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/habits.js"></script>
+</body>
+</html>

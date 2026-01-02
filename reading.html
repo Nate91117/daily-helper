@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading List - Daily Helper</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="screen">
+        <div class="login-container">
+            <h1>Daily Helper</h1>
+            <p>Stay organized together</p>
+            <div class="profile-buttons">
+                <button class="profile-btn" data-user="Nate">Nate</button>
+                <button class="profile-btn" data-user="Ellie">Ellie</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app-screen" class="screen hidden">
+        <header>
+            <div class="container header-content">
+                <h1 class="logo">Daily Helper</h1>
+                <nav>
+                    <ul class="menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="habits.html">Habits</a></li>
+                        <li><a href="reading.html" class="active">Reading</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <span id="current-user"></span>
+                    <button id="logout-btn" class="btn btn-small btn-secondary">Switch User</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="container">
+            <div class="reading-page">
+                <h2>Reading List</h2>
+
+                <section class="add-book card">
+                    <h3>Add New Book</h3>
+                    <form id="add-book-form" class="add-form book-form">
+                        <div class="form-row">
+                            <input type="text" id="book-title" placeholder="Book title" required>
+                            <input type="text" id="book-author" placeholder="Author">
+                        </div>
+                        <div class="form-row">
+                            <input type="text" id="book-genre" placeholder="Genre" list="genre-list">
+                            <datalist id="genre-list"></datalist>
+                            <select id="book-status">
+                                <option value="to_read">To Read</option>
+                                <option value="reading">Currently Reading</option>
+                                <option value="finished">Finished</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn">Add Book</button>
+                    </form>
+                </section>
+
+                <section class="filters card">
+                    <h3>Filter Books</h3>
+                    <div class="filter-form">
+                        <select id="filter-status">
+                            <option value="">All Statuses</option>
+                            <option value="to_read">To Read</option>
+                            <option value="reading">Currently Reading</option>
+                            <option value="finished">Finished</option>
+                        </select>
+                        <select id="filter-genre">
+                            <option value="">All Genres</option>
+                        </select>
+                        <button id="clear-filters" class="btn btn-small btn-secondary hidden">Clear</button>
+                    </div>
+                </section>
+
+                <section class="books-list">
+                    <h3>Your Books</h3>
+                    <div id="books-container" class="book-grid">
+                        <p class="loading">Loading books...</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p>Daily Helper - Stay organized together</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/reading.js"></script>
+</body>
+</html>

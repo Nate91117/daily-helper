@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Helper</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="screen">
+        <div class="login-container">
+            <h1>Daily Helper</h1>
+            <p>Stay organized together</p>
+            <div class="profile-buttons">
+                <button class="profile-btn" data-user="Nate">Nate</button>
+                <button class="profile-btn" data-user="Ellie">Ellie</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app-screen" class="screen hidden">
+        <header>
+            <div class="container header-content">
+                <h1 class="logo">Daily Helper</h1>
+                <nav>
+                    <ul class="menu">
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="habits.html">Habits</a></li>
+                        <li><a href="reading.html">Reading</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <span id="current-user"></span>
+                    <button id="logout-btn" class="btn btn-small btn-secondary">Switch User</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="container">
+            <div class="dashboard">
+                <h2>Welcome, <span id="welcome-name"></span>!</h2>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Today's Habits</h3>
+                        <div class="stat-number"><span id="habits-completed">0</span> / <span id="habits-total">0</span></div>
+                        <p>completed today</p>
+                        <a href="habits.html" class="btn btn-small">View All</a>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Currently Reading</h3>
+                        <div class="stat-number" id="books-reading">0</div>
+                        <p>books in progress</p>
+                        <a href="reading.html?status=reading" class="btn btn-small">View</a>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>To Read</h3>
+                        <div class="stat-number" id="books-to-read">0</div>
+                        <p>books in queue</p>
+                        <a href="reading.html?status=to_read" class="btn btn-small">View</a>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Finished</h3>
+                        <div class="stat-number" id="books-finished">0</div>
+                        <p>books completed</p>
+                        <a href="reading.html?status=finished" class="btn btn-small">View</a>
+                    </div>
+                </div>
+
+                <section class="quick-habits">
+                    <h3>Quick Habit Check-in</h3>
+                    <div id="habits-list" class="habit-list">
+                        <p class="loading">Loading habits...</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p>Daily Helper - Stay organized together</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
