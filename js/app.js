@@ -6,6 +6,7 @@ async function loadDashboard() {
 
     await Promise.all([
         loadHabitStats(),
+        loadStretchStats(),
         loadBookStats(),
         loadQuickHabits()
     ]);
@@ -45,6 +46,41 @@ async function loadHabitStats() {
         document.getElementById('habits-total').textContent = totalHabits;
     } catch (err) {
         console.error('Error loading habit stats:', err);
+    }
+}
+
+async function loadStretchStats() {
+    const user = getCurrentUser();
+    const today = getToday();
+
+    try {
+        const { data: stretches, error } = await db
+            .from('stretches')
+            .select('id')
+            .eq('user_name', user);
+
+        if (error) throw error;
+
+        const totalStretches = stretches ? stretches.length : 0;
+
+        let completedToday = 0;
+        if (stretches && stretches.length > 0) {
+            const stretchIds = stretches.map(s => s.id);
+            const { data: completions, error: compError } = await db
+                .from('stretch_completions')
+                .select('id')
+                .in('stretch_id', stretchIds)
+                .eq('completed_date', today);
+
+            if (!compError) {
+                completedToday = completions ? completions.length : 0;
+            }
+        }
+
+        document.getElementById('stretches-completed').textContent = completedToday;
+        document.getElementById('stretches-total').textContent = totalStretches;
+    } catch (err) {
+        console.error('Error loading stretch stats:', err);
     }
 }
 

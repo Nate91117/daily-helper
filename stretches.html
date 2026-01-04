@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Habits - Daily Helper</title>
+    <title>Stretches - Daily Helper</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -28,8 +28,8 @@
                 <nav>
                     <ul class="menu">
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="habits.html" class="active">Habits</a></li>
-                        <li><a href="stretches.html">Stretches</a></li>
+                        <li><a href="habits.html">Habits</a></li>
+                        <li><a href="stretches.html" class="active">Stretches</a></li>
                         <li><a href="reading.html">Reading</a></li>
                     </ul>
                 </nav>
@@ -41,21 +41,22 @@
         </header>
 
         <main class="container">
-            <div class="habits-page">
-                <h2>Habit Tracker</h2>
+            <div class="stretches-page">
+                <h2>Stretches & Exercises</h2>
 
-                <section class="add-habit card">
-                    <h3>Add New Habit</h3>
-                    <form id="add-habit-form" class="add-form">
-                        <input type="text" id="habit-name" placeholder="Enter habit name..." required>
-                        <button type="submit" class="btn">Add Habit</button>
+                <section class="add-stretch card">
+                    <h3>Add New Stretch/Exercise</h3>
+                    <form id="add-stretch-form" class="add-form stretch-form">
+                        <input type="text" id="stretch-name" placeholder="Exercise name (e.g., Hip flexor stretch)" required>
+                        <input type="text" id="stretch-area" placeholder="Body area (e.g., Hips, Lower back)">
+                        <button type="submit" class="btn">Add</button>
                     </form>
                 </section>
 
-                <section class="habits-list">
-                    <h3>Your Habits</h3>
-                    <div id="habits-container" class="habit-list">
-                        <p class="loading">Loading habits...</p>
+                <section class="stretches-list">
+                    <h3>Your Stretches</h3>
+                    <div id="stretches-container" class="stretch-list">
+                        <p class="loading">Loading stretches...</p>
                     </div>
                 </section>
             </div>
@@ -70,6 +71,6 @@
 
     <script src="js/supabase-config.js"></script>
     <script src="js/auth.js"></script>
-    <script src="js/habits.js"></script>
+    <script src="js/stretches.js"></script>
 </body>
 </html>
