@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food - Daily Helper</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="screen">
+        <div class="login-container">
+            <h1>Daily Helper</h1>
+            <p>Stay organized together</p>
+            <div class="profile-buttons">
+                <button class="profile-btn" data-user="Nate">Nate</button>
+                <button class="profile-btn" data-user="Ellie">Ellie</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app-screen" class="screen hidden">
+        <header>
+            <div class="container header-content">
+                <h1 class="logo">Daily Helper</h1>
+                <nav>
+                    <ul class="menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="habits.html">Habits</a></li>
+                        <li><a href="stretches.html">Stretches</a></li>
+                        <li><a href="food.html" class="active">Food</a></li>
+                        <li><a href="reading.html">Reading</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <span id="current-user"></span>
+                    <button id="logout-btn" class="btn btn-small btn-secondary">Switch User</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="container">
+            <div class="food-page">
+                <h2>Food</h2>
+
+                <!-- Tab Navigation -->
+                <div class="tab-nav">
+                    <button class="tab-btn active" data-tab="freezer">Freezer</button>
+                    <button class="tab-btn" data-tab="recipes">Recipes</button>
+                </div>
+
+                <!-- Freezer Tab -->
+                <div id="freezer-tab" class="tab-content active">
+                    <section class="add-item card">
+                        <h3>Add to Freezer</h3>
+                        <form id="add-freezer-form" class="add-form">
+                            <input type="text" id="freezer-item-name" placeholder="Item name (e.g., Chicken breasts)" required>
+                            <input type="text" id="freezer-item-qty" placeholder="Quantity (e.g., 2 lbs)">
+                            <button type="submit" class="btn">Add</button>
+                        </form>
+                    </section>
+
+                    <section class="freezer-list">
+                        <h3>In the Freezer</h3>
+                        <div id="freezer-container" class="item-list">
+                            <p class="loading">Loading...</p>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Recipes Tab -->
+                <div id="recipes-tab" class="tab-content">
+                    <section class="add-item card">
+                        <h3>Add Recipe</h3>
+                        <form id="add-recipe-form" class="recipe-form">
+                            <div class="form-row">
+                                <input type="text" id="recipe-name" placeholder="Recipe name" required>
+                                <input type="url" id="recipe-link" placeholder="Link to recipe (optional)">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipe-ingredients">Ingredients (optional)</label>
+                                <textarea id="recipe-ingredients" rows="4" placeholder="List ingredients, one per line..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipe-instructions">Instructions (optional)</label>
+                                <textarea id="recipe-instructions" rows="4" placeholder="Step by step instructions..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipe-notes">Notes (optional)</label>
+                                <textarea id="recipe-notes" rows="2" placeholder="Any notes or tips..."></textarea>
+                            </div>
+                            <button type="submit" class="btn">Add Recipe</button>
+                        </form>
+                    </section>
+
+                    <section class="recipes-list">
+                        <h3>My Recipes</h3>
+                        <div id="recipes-container" class="recipe-grid">
+                            <p class="loading">Loading...</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <!-- Recipe Modal -->
+        <div id="recipe-modal" class="modal hidden">
+            <div class="modal-content">
+                <button class="modal-close">&times;</button>
+                <h2 id="modal-recipe-name"></h2>
+                <div id="modal-recipe-link"></div>
+                <div id="modal-recipe-ingredients"></div>
+                <div id="modal-recipe-instructions"></div>
+                <div id="modal-recipe-notes"></div>
+                <div class="modal-actions">
+                    <button id="modal-delete-btn" class="btn btn-danger">Delete Recipe</button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="container">
+                <p>Daily Helper - Stay organized together</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/food.js"></script>
+</body>
+</html>
