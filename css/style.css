@@ -677,6 +677,51 @@ section {
     font-size: 0.8rem;
 }
 
+.freezer-number {
+    width: 28px;
+    height: 28px;
+    background: #ecf0f1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    flex-shrink: 0;
+}
+
+.freezer-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Freezer on Home Page */
+.freezer-reminder {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.freezer-home-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.freezer-home-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 3px solid #3498db;
+}
+
 /* Recipes */
 .recipe-form .form-group {
     margin-bottom: 15px;

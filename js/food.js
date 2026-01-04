@@ -28,7 +28,7 @@ async function loadFreezerItems() {
             .from('freezer_items')
             .select('*')
             .eq('user_name', user)
-            .order('created_at', { ascending: false });
+            .order('priority', { ascending: true });
 
         if (error) throw error;
 
@@ -37,19 +37,31 @@ async function loadFreezerItems() {
             return;
         }
 
-        container.innerHTML = items.map(item => `
+        container.innerHTML = items.map((item, idx) => `
             <div class="freezer-item">
+                <span class="freezer-number">${idx + 1}</span>
                 <div class="freezer-item-info">
                     <span class="freezer-item-name">${escapeHtml(item.name)}</span>
                     ${item.quantity ? `<span class="freezer-item-qty">${escapeHtml(item.quantity)}</span>` : ''}
-                    <span class="freezer-item-date">Added ${formatDate(item.date_added)}</span>
                 </div>
-                <button class="btn btn-small btn-danger delete-freezer" data-id="${item.id}">Used</button>
+                <div class="freezer-actions">
+                    <button class="btn-icon move-freezer-up" data-id="${item.id}" ${idx === 0 ? 'disabled' : ''} title="Move up">&#9650;</button>
+                    <button class="btn-icon move-freezer-down" data-id="${item.id}" ${idx === items.length - 1 ? 'disabled' : ''} title="Move down">&#9660;</button>
+                    <button class="btn btn-small btn-danger delete-freezer" data-id="${item.id}">Used</button>
+                </div>
             </div>
         `).join('');
 
         container.querySelectorAll('.delete-freezer').forEach(btn => {
             btn.addEventListener('click', () => deleteFreezerItem(btn.dataset.id));
+        });
+
+        container.querySelectorAll('.move-freezer-up').forEach(btn => {
+            btn.addEventListener('click', () => moveFreezerItem(btn.dataset.id, 'up'));
+        });
+
+        container.querySelectorAll('.move-freezer-down').forEach(btn => {
+            btn.addEventListener('click', () => moveFreezerItem(btn.dataset.id, 'down'));
         });
 
     } catch (err) {
@@ -62,12 +74,23 @@ async function addFreezerItem(name, quantity) {
     const user = getCurrentUser();
 
     try {
+        // Get max priority to add at end
+        const { data: existing } = await db
+            .from('freezer_items')
+            .select('priority')
+            .eq('user_name', user)
+            .order('priority', { ascending: false })
+            .limit(1);
+
+        const newPriority = existing && existing.length > 0 ? (existing[0].priority || 0) + 1 : 1;
+
         const { error } = await db
             .from('freezer_items')
             .insert({
                 user_name: user,
                 name: name,
                 quantity: quantity || null,
+                priority: newPriority,
                 date_added: getToday()
             });
 
@@ -76,6 +99,34 @@ async function addFreezerItem(name, quantity) {
     } catch (err) {
         console.error('Error adding freezer item:', err);
         alert('Error adding item.');
+    }
+}
+
+async function moveFreezerItem(itemId, direction) {
+    const user = getCurrentUser();
+
+    try {
+        const { data: items } = await db
+            .from('freezer_items')
+            .select('id, priority')
+            .eq('user_name', user)
+            .order('priority', { ascending: true });
+
+        const currentIndex = items.findIndex(i => i.id === itemId);
+        if (currentIndex === -1) return;
+
+        const swapIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
+        if (swapIndex < 0 || swapIndex >= items.length) return;
+
+        const currentPriority = items[currentIndex].priority;
+        const swapPriority = items[swapIndex].priority;
+
+        await db.from('freezer_items').update({ priority: swapPriority }).eq('id', items[currentIndex].id);
+        await db.from('freezer_items').update({ priority: currentPriority }).eq('id', items[swapIndex].id);
+
+        await loadFreezerItems();
+    } catch (err) {
+        console.error('Error moving freezer item:', err);
     }
 }
 

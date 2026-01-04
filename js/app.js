@@ -8,7 +8,8 @@ async function loadDashboard() {
         loadHabitStats(),
         loadStretchStats(),
         loadBookStats(),
-        loadQuickHabits()
+        loadQuickHabits(),
+        loadFreezerList()
     ]);
 }
 
@@ -229,6 +230,40 @@ async function toggleHabit(habitId) {
         await loadDashboard();
     } catch (err) {
         console.error('Error toggling habit:', err);
+    }
+}
+
+async function loadFreezerList() {
+    const user = getCurrentUser();
+    const container = document.getElementById('freezer-list');
+
+    try {
+        const { data: items, error } = await db
+            .from('freezer_items')
+            .select('*')
+            .eq('user_name', user)
+            .order('priority', { ascending: true });
+
+        if (error) throw error;
+
+        if (!items || items.length === 0) {
+            container.innerHTML = '<p class="empty-state">Freezer is empty! <a href="food.html">Add items</a></p>';
+            return;
+        }
+
+        container.innerHTML = items.map((item, idx) => `
+            <div class="freezer-home-item">
+                <span class="freezer-number">${idx + 1}</span>
+                <div class="freezer-item-info">
+                    <span class="freezer-item-name">${escapeHtml(item.name)}</span>
+                    ${item.quantity ? `<span class="freezer-item-qty">${escapeHtml(item.quantity)}</span>` : ''}
+                </div>
+            </div>
+        `).join('');
+
+    } catch (err) {
+        console.error('Error loading freezer items:', err);
+        container.innerHTML = '<p class="error">Error loading freezer items</p>';
     }
 }
 
